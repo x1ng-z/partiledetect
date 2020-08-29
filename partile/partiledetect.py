@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
-
-
+import imagepost
+DEBUG=False
 
 
 if __name__ == '__main__':
@@ -62,7 +62,8 @@ if __name__ == '__main__':
         makers=np.zeros((src.shape[0],src.shape[1]),np.int32)
         for i, contour in enumerate(contours):
             area = cv.contourArea(contour)
-            print("index1={},Area1={}".format(i,area))
+            if DEBUG:
+                print("index1={},Area1={}".format(i,area))
             cv.drawContours(makers,contours,int(i),(i+1,i+1,i+1),cv.FILLED)
 
         # cv.circle(makers, (5, 5), 3, (255, 255, 255), -1)
@@ -87,7 +88,7 @@ if __name__ == '__main__':
 
         cv.imshow("Final Result1", src)
         cv.imshow("Final Result2", dst)
-
+        imagepost.image_post()
 
             # foxpointM = foxpointM + 1
             # # print('*****MaterialArea******', area)
