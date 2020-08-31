@@ -15,7 +15,14 @@ def image_post(url,originImage,resultImage):
     # res = requests.post(url=url, files=multiple_files, data=data)
     res = requests.post(url=url, files=multiple_files)
 
+def analyzeresult_post(url,result):
+    # data = {"type_code": type_code,"area_id": area_id}
+    # for key,value in result.items():
+    #     url=url+";"+key+"="+str(value)
+    res = requests.post(url=url,data=result)
 
-rgb1=cv.imread("E:\\project\\2020_Project\\partiledetect\\YUV\\rgb.jpg")
-rgb2=cv.imread("E:\\project\\2020_Project\\partiledetect\\YUV\\rgb.jpg")
-image_post("http://127.0.0.1:8080/iovedio/analysispic/1",rgb1,rgb2)
+
+
+# rgb1=cv.imread("E:\\project\\2020_Project\\partiledetect\\YUV\\rgb.jpg")
+# rgb2=cv.imread("E:\\project\\2020_Project\\partiledetect\\YUV\\rgb.jpg")
+# image_post("http://127.0.0.1:8080/iovedio/analysispic/1",rgb1,rgb2)
