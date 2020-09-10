@@ -57,8 +57,8 @@ if __name__ == '__main__':
             picture = read(sum)
             image = np.asarray(picture, dtype="uint8")
             image = cv.imdecode(image, cv.IMREAD_COLOR)
-            if DEBUG:
-                cv.imshow("success", image)
+
+            cv.imshow("success", image)
             row = 216
             col = 236
             startrow = 620
@@ -100,12 +100,12 @@ if __name__ == '__main__':
             dist_transform = cv.distanceTransform(edge, cv.DIST_L1, cv.DIST_MASK_3)
             normdis = np.zeros_like(edge)
             normdis = cv.normalize(dist_transform, dist_transform, 0, 1, cv.NORM_MINMAX);
-            ret, sure_fg = cv.threshold(dist_transform, 0.02 * dist_transform.max(), 255, 0)
+            ret, sure_fg = cv.threshold(dist_transform, 0.03 * dist_transform.max(), 255, 0)
             sure_fg = np.uint8(sure_fg)
             if DEBUG:
                 cv.imshow("sure_fg", sure_fg * 20)
 
-            contours, hierarchy = cv.findContours(sure_fg, cv.RETR_CCOMP, cv.CHAIN_APPROX_NONE)
+            images, contours, hierarchy = cv.findContours(sure_fg, cv.RETR_CCOMP, cv.CHAIN_APPROX_NONE)
             makers = np.zeros((src.shape[0], src.shape[1]), np.int32)
             print(len(contours))
             for i, contour in enumerate(contours):
@@ -128,13 +128,14 @@ if __name__ == '__main__':
                     if ((index > 0) and (index <= len(contours))):
                         dst[row, col] = colors[index - 1, :]
                     else:
-                        src[row, col] = [0, 255, 0]
+                        if DEBUG:
+                            src[row, col] = [0, 255, 0]
                         dst[row, col] = [0, 0, 0]
                     pass
 
             # cv.imshow("Final Result1", src)
             # cv.imshow("Final Result2", dst)
-            icontours, hierarchy = cv.findContours(makers, cv.RETR_CCOMP, cv.CHAIN_APPROX_NONE)
+            images,icontours, hierarchy = cv.findContours(makers, cv.RETR_CCOMP, cv.CHAIN_APPROX_NONE)
             drawcolor = np.zeros_like(src)
             colors = np.random.randint(0, 255, (len(icontours), 3))
 
@@ -170,9 +171,9 @@ if __name__ == '__main__':
             cv.imshow("Final Result4", np.uint8(pickstone))
             if nextsendtime <= time.time():
                 nextsendtime = time.time() + 60 * 5
-                imagepost.image_post("http://127.0.0.1:8080/iovedio/analysispic/1", src, np.uint8(pickstone))
-            imagepost.analyzeresult_post("http://127.0.0.1:8080/iovedio/analysisdata/1",
-                                         {"stoneNum": stoneNum, "stoneArea": stoneArea})
+                imagepost.image_post("http://192.168.156.26:8080/iovedio/analysispic/1", src, np.uint8(pickstone))
+            imagepost.analyzeresult_post("http://192.168.156.26:8080/iovedio/analysisdata/1",
+                                         {"stoneNum": stoneNum, "stoneArea": 100*stoneArea/TotalArea})
 
             # cv.waitKey(0)
 

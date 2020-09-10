@@ -10,8 +10,8 @@ def image_post(url,originImage,resultImage):
     #     ('images', ('foo.png', open('foo.png', 'rb'), 'image/png')),
     #     ('images', ('bar.png', open('bar.png', 'rb'), 'image/png'))]
     multiple_files = [
-        ('images', ("file_name.jpg", cv.imencode(".jpg", originImage)[1].tobytes(), "image/jpg")),
-        ('images', ("file_name.jpg", cv.imencode(".jpg", resultImage)[1].tobytes(), "image/jpg"))]
+        ('origion', ("file_name.jpg", cv.imencode(".jpg", originImage)[1].tobytes(), "image/jpg")),
+        ('result', ("file_name.jpg", cv.imencode(".jpg", resultImage)[1].tobytes(), "image/jpg"))]
     # res = requests.post(url=url, files=multiple_files, data=data)
     res = requests.post(url=url, files=multiple_files)
 
